@@ -10,7 +10,7 @@ from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
 
 
 def process_update(ms: [MachineEntity]):
-    for m in ms:
+    for m in ms:  # TODO zap
         print(m)
 
     estimates = [estimate(m) for m in ms]
@@ -18,5 +18,6 @@ def process_update(ms: [MachineEntity]):
 
 
 def update_context(estimates: [RoughnessEstimateEntity]):
-    pass
+    for e in estimates:  # TODO zap
+        print(e)
     # TODO write back to Orion

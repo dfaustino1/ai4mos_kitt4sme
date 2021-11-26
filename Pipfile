@@ -8,5 +8,8 @@ fastapi = "*"
 pydantic = "*"
 "uvicorn[standard]" = "*"
 
+[dev-packages]
+pytest = "*"
+
 [requires]
 python_version = "3.8"

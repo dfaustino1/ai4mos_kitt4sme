@@ -206,11 +206,3 @@ class RawReading(BaseModel):
 # )
 # print(notification.filter_entities(MachineEntity))
 
-notification = EntityUpdateNotification(
-    data=[
-        {"id": "1", "type": "Machine", "Ra": {"value": 1.1}},
-        {"id": "2", "type": "NotMe", "Ra": {"value": 2.2}},
-        {"id": "3", "type": "Machine", "Ra": {"value": 3.3}}
-    ]
-)
-print(notification.json())

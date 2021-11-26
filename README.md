@@ -27,6 +27,12 @@ $ charm .
 # ^ Pycharm or whatever floats your boat
 ```
 
+Run all tests
+
+```bash
+$ PYTHONPATH=".:.roughnator/" pytest tests
+```
+
 
 
 
