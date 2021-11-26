@@ -3,7 +3,6 @@ Estimates likely roughness and acceleration.
 """
 
 from roughnator.ngsy import FloatAttr, MachineEntity, RoughnessEstimateEntity
-from sklearn.neural_network import MLPRegressor
 import joblib
 
 
