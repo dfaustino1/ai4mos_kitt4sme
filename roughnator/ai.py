@@ -6,6 +6,9 @@ from roughnator.ngsy import FloatAttr, MachineEntity, RoughnessEstimateEntity
 import joblib
 
 
+ROUGHNESS_MODEL_PATH_FROM_ROOT = 'data/roughness.model.pkl'
+
+
 def estimate(machine: MachineEntity) -> RoughnessEstimateEntity:
     a = estimate_acceleration(machine)
     r = estimate_roughness(machine)
@@ -20,8 +23,7 @@ def estimate(machine: MachineEntity) -> RoughnessEstimateEntity:
 def estimate_roughness(machine: MachineEntity) -> float:
     xin = [machine.AcelR.value, machine.fz.value, machine.Diam.value,
            machine.ae.value, machine.HB.value, machine.geom.value]
-    filename = 'mlp.sav'
-    model = joblib.load(filename)
+    model = joblib.load(ROUGHNESS_MODEL_PATH_FROM_ROOT)
     return model.predict([xin])
 
 
