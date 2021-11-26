@@ -22,5 +22,4 @@ def estimate_roughness(machine: MachineEntity) -> float:
 
 
 def estimate_acceleration(machine: MachineEntity) -> float:
-    return -3.4
-    # TODO implement
+    return machine.AcelR.value
