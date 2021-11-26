@@ -3,6 +3,8 @@ Estimates likely roughness and acceleration.
 """
 
 from roughnator.ngsy import FloatAttr, MachineEntity, RoughnessEstimateEntity
+from sklearn.neural_network import MLPRegressor
+import joblib
 
 
 def estimate(machine: MachineEntity) -> RoughnessEstimateEntity:
@@ -17,8 +19,11 @@ def estimate(machine: MachineEntity) -> RoughnessEstimateEntity:
 
 
 def estimate_roughness(machine: MachineEntity) -> float:
-    return -1.2
-    # TODO implement
+    xin = [machine.AcelR.value, machine.fz.value, machine.Diam.value,
+           machine.ae.value, machine.HB.value, machine.geom.value]
+    filename = 'mlp.sav'
+    model = joblib.load(filename)
+    return model.predict([xin])
 
 
 def estimate_acceleration(machine: MachineEntity) -> float:

@@ -5,7 +5,9 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+"joblib" = "*"
 pydantic = "*"
+"scikit-learn" = "*"
 "uvicorn[standard]" = "*"
 
 [dev-packages]

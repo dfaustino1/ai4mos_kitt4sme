@@ -24,6 +24,3 @@ def test_readings_to_machine_entity_json():
            '"geom": {"type": "Number", "value": 10.0}, ' \
            '"Ra": {"type": "Number", "value": 11.0}}'
     assert want == got
-
-
-test_readings_to_machine_entity_json()
