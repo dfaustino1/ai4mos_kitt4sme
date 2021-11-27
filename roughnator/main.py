@@ -2,6 +2,7 @@ from fastapi import FastAPI, Header
 from typing import Optional
 
 from roughnator.enteater import process_update
+import roughnator.log as log
 from roughnator.ngsy import MachineEntity
 from roughnator.util.ngsi.entity import EntityUpdateNotification
 from roughnator.util.ngsi.headers import FiwareContext
@@ -31,5 +32,8 @@ def post_updates(notification: EntityUpdateNotification,
         service=str(fiware_service), service_path=str(fiware_servicepath),
         correlator=str(fiware_correlator)
     )
+
+    log.received_ngsi_entity_update(ctx, notification)
+
     updated_machines = notification.filter_entities(MachineEntity)
     process_update(ctx, updated_machines)
