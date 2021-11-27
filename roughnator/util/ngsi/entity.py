@@ -59,3 +59,8 @@ class EntityUpdateNotification(BaseModel):
     def filter_entities(self, entity_class: Type[BaseEntity]) -> [BaseEntity]:
         candidates = [entity_class.from_raw(d) for d in self.data]
         return [c for c in candidates if c is not None]
+
+
+class EntitiesUpsert(BaseModel):
+    actionType = 'append'
+    entities: List[BaseEntity]

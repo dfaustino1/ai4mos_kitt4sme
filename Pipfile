@@ -9,6 +9,7 @@ fastapi = "*"
 pydantic = "*"
 "requests" = "*"
 "scikit-learn" = "*"
+"uri" = "*"
 "uvicorn[standard]" = "*"
 
 [dev-packages]
