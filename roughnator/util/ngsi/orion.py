@@ -69,3 +69,7 @@ class OrionClient:
         url = self._urls.subscriptions()
         self._http.post(url=url, json_payload=sub,
                         headers=self._ctx.headers())
+
+    def list_subscriptions(self) -> [dict]:
+        url = self._urls.subscriptions()
+        return self._http.get(url=url, headers=self._ctx.headers())

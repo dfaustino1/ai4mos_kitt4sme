@@ -1,50 +1,15 @@
 from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
 from roughnator.util.ngsi.entity import FloatAttr
 from roughnator.util.ngsi.orion import OrionClient
-from tests.integration.conftest import ROUGHNATOR_HOST, wait_for
-
-
-SUB = {
-    "description": "Notify Roughnator of changes to any entity.",
-    "subject": {
-        "entities": [
-            {
-                "idPattern": ".*"
-            }
-        ]
-    },
-    "notification": {
-        "http": {
-            "url": f"http://{ROUGHNATOR_HOST}:8000/updates"
-        }
-    }
-}
-
-
-def create_roughnator_sub(orion: OrionClient):
-    orion.subscribe(SUB)
-
-
-def machine_entity(nid: int) -> MachineEntity:
-    m = MachineEntity(id='', AcelR=FloatAttr.new(1.0335),
-                      fz=FloatAttr.new(0.98201), Diam=FloatAttr.new(0.98201),
-                      ae=FloatAttr.new(1.0335), HB=FloatAttr.new(145),
-                      geom=FloatAttr.new(-0.021), Ra=FloatAttr.new(0.1))
-    m.set_id_with_type_prefix(f"{nid}")
-    return m
+from tests.util.fiware import SubMan
+from tests.util.sampler import MachineSampler
+from tests.util.wait import wait_until
 
 
 def upload_machine_entities(orion: OrionClient) -> [MachineEntity]:
-    machine1 = machine_entity(1)
-    machine1.AcelR = FloatAttr.new(1.0)
-    orion.upsert_entity(machine1)
-
-    machine2 = machine_entity(2)
-    machine2.AcelR = FloatAttr.new(2.0)
-    orion.upsert_entity(machine2)
-
-    machine2.AcelR = FloatAttr.new(3.0)
-    orion.upsert_entity(machine2)
+    sampler = MachineSampler(machines_n=2, orion=orion)
+    machine1 = sampler.send_machine_readings(1)
+    machine2 = sampler.send_machine_readings(2)
 
     return [machine1, machine2]
 
@@ -54,17 +19,22 @@ def list_estimate_entities(orion: OrionClient) -> [RoughnessEstimateEntity]:
                                    acceleration=FloatAttr.new(1),
                                    roughness=FloatAttr.new(1))
     es = orion.list_entities_of_type(like)
-    assert len(es) > 0
 
     sorted_estimates = sorted(es, key=lambda e: e.id)
     return sorted_estimates
 
 
+def has_estimate_entities(orion: OrionClient) -> bool:
+    es = list_estimate_entities(orion)
+    return len(es) > 0
+
+
 def test_estimates(orion: OrionClient):
-    create_roughnator_sub(orion)
+    SubMan().create_roughnator_sub()
     sorted_machines = upload_machine_entities(orion)
 
-    wait_for(lambda: list_estimate_entities(orion))
+    wait_until(lambda: has_estimate_entities(orion))
+
     sorted_estimates = list_estimate_entities(orion)
 
     assert len(sorted_machines) == len(sorted_estimates)
