@@ -10,9 +10,9 @@ Examples
 
 1. NGSI attributes from values.
 
->>> FloatAttr.from_value(2.3).json()
+>>> FloatAttr.new(2.3).json()
 '{"type": "Number", "value": 2.3}'
->>> print(TextAttr.from_value('hi'))
+>>> print(TextAttr.new('hi'))
 type='Text' value='hi'
 
 
@@ -69,8 +69,8 @@ AcelR=1.0 fz=2.0 Diam=4.0 ae=5.0 HB=6.0 geom=10.0 Ra=11.0
 8. Build roughness estimate entity and serialise it.
 
 >>> ai = RoughnessEstimateEntity(id=machine1.id,
-...                              acceleration=FloatAttr.from_value(2.3),
-...                              roughness=FloatAttr.from_value(4.5))
+...                              acceleration=FloatAttr.new(2.3),
+...                              roughness=FloatAttr.new(4.5))
 >>> ai.json()
 '{"id": "urn:ngsi-ld:Machine:1", "type": "RoughnessEstimate", \
 "acceleration": {"type": "Number", "value": 2.3}, \
@@ -130,13 +130,13 @@ class RawReading(BaseModel):
     def to_machine_entity(self, entity_id) -> MachineEntity:
         e = MachineEntity(id=entity_id)
 
-        e.AcelR = FloatAttr.from_value(self.AcelR)
-        e.fz = FloatAttr.from_value(self.fz)
-        e.Diam = FloatAttr.from_value(self.Diam)
-        e.ae = FloatAttr.from_value(self.ae)
-        e.HB = FloatAttr.from_value(self.HB)
-        e.geom = FloatAttr.from_value(self.geom)
-        e.Ra = FloatAttr.from_value(self.Ra)
+        e.AcelR = FloatAttr.new(self.AcelR)
+        e.fz = FloatAttr.new(self.fz)
+        e.Diam = FloatAttr.new(self.Diam)
+        e.ae = FloatAttr.new(self.ae)
+        e.HB = FloatAttr.new(self.HB)
+        e.geom = FloatAttr.new(self.geom)
+        e.Ra = FloatAttr.new(self.Ra)
 
         return e
 

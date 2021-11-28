@@ -36,4 +36,5 @@ def post_updates(notification: EntityUpdateNotification,
     log.received_ngsi_entity_update(ctx, notification)
 
     updated_machines = notification.filter_entities(MachineEntity)
-    process_update(ctx, updated_machines)
+    if updated_machines:
+        process_update(ctx, updated_machines)

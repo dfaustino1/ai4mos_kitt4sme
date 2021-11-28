@@ -2,8 +2,8 @@
 Wrapper calls to Orion Context Broker.
 """
 
-from uri import URI
 from typing import Type
+from uri import URI
 
 from roughnator.util.http.jclient import JsonClient
 from roughnator.util.ngsi.entity import BaseEntity, EntitiesUpsert
@@ -27,6 +27,10 @@ class OrionEndpoints:
 
     def update_op(self) -> str:
         url = self._append('v2/op/update')
+        return str(url)
+
+    def subscriptions(self) -> str:
+        url = self._append('v2/subscriptions')
         return str(url)
 
 
@@ -60,3 +64,8 @@ class OrionClient:
         entity_arr = self._http.get(url=url, headers=self._ctx.headers())
         models = [like.parse_obj(entity_dict) for entity_dict in entity_arr]
         return models
+
+    def subscribe(self, sub: dict):
+        url = self._urls.subscriptions()
+        self._http.post(url=url, json_payload=sub,
+                        headers=self._ctx.headers())

@@ -14,8 +14,8 @@ def estimate(machine: MachineEntity) -> RoughnessEstimateEntity:
     r = estimate_roughness(machine)
 
     return RoughnessEstimateEntity(id=machine.id,
-                                   acceleration=FloatAttr.from_value(a),
-                                   roughness=FloatAttr.from_value(r))
+                                   acceleration=FloatAttr.new(a),
+                                   roughness=FloatAttr.new(r))
     # TODO what should the ID be? ideally there should be a bijection b/w
     # machine IDs and estimate IDs...
 

@@ -16,10 +16,10 @@ class Attr(BaseModel):
     value: Any
 
     @classmethod
-    def from_value(cls, v: Any) -> Optional['Attr']:
-        if v is None:
+    def new(cls, value: Any) -> Optional['Attr']:
+        if value is None:
             return None
-        return cls(value=v)
+        return cls(value=value)
 
 
 class FloatAttr(Attr):

@@ -30,7 +30,7 @@ $ charm .
 Run all tests:
 
 ```bash
-$ PYTHONPATH=".:.roughnator/" pytest tests
+$ PYTHONPATH="." pytest tests
 ```
 
 Build and run the Docker image:
