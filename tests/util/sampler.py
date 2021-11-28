@@ -32,6 +32,9 @@ class MachineSampler:
 
         return m
 
+    def entity_id(self, nid: int) -> str:
+        return self.new_machine_entity(nid).id
+
     def send_machine_readings(self, nid: int) -> MachineEntity:
         machine = self.new_machine_entity(nid)
         self._orion.upsert_entity(machine)
