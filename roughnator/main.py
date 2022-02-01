@@ -3,19 +3,18 @@ from fipy.ngsi.headers import FiwareContext
 from fastapi import FastAPI, Header
 from typing import Optional
 
+from roughnator import __version__
 from roughnator.enteater import process_update
 import roughnator.log as log
 from roughnator.ngsy import MachineEntity
 
-
-VERSION = '0.1.0'
 
 app = FastAPI()
 
 
 @app.get('/')
 def read_root():
-    return {'roughnator': VERSION}
+    return {'roughnator': __version__}
 
 
 @app.get("/version")
