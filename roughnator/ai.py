@@ -2,8 +2,10 @@
 Estimates likely roughness and acceleration.
 """
 
-from roughnator.ngsy import FloatAttr, MachineEntity, RoughnessEstimateEntity
+from fipy.ngsi.entity import FloatAttr
 import joblib
+
+from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
 
 
 ROUGHNESS_MODEL_PATH_FROM_ROOT = 'data/roughness.model.pkl'

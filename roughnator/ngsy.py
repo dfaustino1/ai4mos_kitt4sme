@@ -4,7 +4,7 @@ Roughnator NGSI v2 data types.
 Examples
 --------
 
->>> from roughnator.util.ngsi.entity import *
+>>> from fipy.ngsi.entity import *
 >>> from roughnator.ngsy import *
 
 
@@ -94,11 +94,9 @@ ae=None, HB=None, geom=None, Ra=FloatAttr(type='Number', value=3.3))]
 
 """
 
-
+from fipy.ngsi.entity import BaseEntity, FloatAttr
 from pydantic import BaseModel
 from typing import Optional
-
-from roughnator.util.ngsi.entity import BaseEntity, FloatAttr
 
 
 class MachineEntity(BaseEntity):
@@ -175,4 +173,3 @@ class RawReading(BaseModel):
 #     ]
 # )
 # print(notification.filter_entities(MachineEntity))
-

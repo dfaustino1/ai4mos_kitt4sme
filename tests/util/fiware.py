@@ -1,10 +1,11 @@
+from fipy.http.jclient import JsonClient
+from fipy.ngsi.headers import FiwareContext
+from fipy.ngsi.orion import OrionClient
+from fipy.ngsi.quantumleap import QuantumLeapClient
+from fipy.wait import wait_for_orion, wait_for_quantumleap
 import json
-from typing import Optional
+from typing import List, Optional
 from uri import URI
-
-from roughnator.util.http.jclient import JsonClient
-from roughnator.util.ngsi.headers import FiwareContext
-from roughnator.util.ngsi.orion import OrionClient
 
 
 TENANT = 'csic'
@@ -52,6 +53,10 @@ def orion_client(service_path: Optional[str] = None,
     return OrionClient(base_url, ctx)
 
 
+def wait_on_orion():
+    wait_for_orion(orion_client())
+
+
 class SubMan:
 
     def __init__(self):
@@ -63,7 +68,7 @@ class SubMan:
     def create_quantumleap_sub(self):
         self._orion.subscribe(QUANTUMLEAP_SUB)
 
-    def create_subscriptions(self) -> [dict]:
+    def create_subscriptions(self) -> List[dict]:
         self.create_roughnator_sub()
         self.create_quantumleap_sub()
         return self._orion.list_subscriptions()
@@ -103,50 +108,6 @@ def create_subscriptions():
     print(formatted)
 
 
-class QuantumLeapEndpoints:
-
-    def __init__(self, base_url: URI):
-        self._base_url = base_url
-
-    def _append(self, rel_path: str) -> URI:
-        abspath = self._base_url.path / rel_path
-        return self._base_url / abspath
-
-    def attribute(self, entity_id: str, attr_name: str,
-                  query: dict = None) -> str:
-        rel_path = f"v2/entities/{entity_id}/attrs/{attr_name}"
-        url = self._append(rel_path)
-        if query:
-            url.query = query
-        return str(url)
-
-    def entity_type(self, etype: str, attr_name: str,
-                    query: dict = None) -> str:
-        rel_path = f"v2/types/{etype}/attrs/{attr_name}"
-        url = self._append(rel_path)
-        if query:
-            url.query = query
-        return str(url)
-
-
-class QuantumLeapClient:
-
-    def __init__(self, base_url: URI, ctx: FiwareContext):
-        self._urls = QuantumLeapEndpoints(base_url)
-        self._ctx = ctx
-        self._http = JsonClient()
-
-    def time_series(self, entity_id: str, attr_name: str,
-                    query: dict = None) -> dict:
-        url = self._urls.attribute(entity_id, attr_name, query)
-        return self._http.get(url=url, headers=self._ctx.headers())
-
-    def all_time_series(self, entity_type: str, attr_name: str,
-                        query: dict = None) -> dict:
-        url = self._urls.entity_type(entity_type, attr_name, query)
-        return self._http.get(url=url, headers=self._ctx.headers())
-
-
 def quantumleap_client() -> QuantumLeapClient:
     base_url = URI(QUANTUMLEAP_EXTERNAL_BASE_URL)
     ctx = FiwareContext(service=TENANT, service_path='/')  # (*)
@@ -154,3 +115,7 @@ def quantumleap_client() -> QuantumLeapClient:
 # NOTE. Orion handling of empty service path. We send Orion entities w/ no
 # service path in our tests. But when Orion notifies QL, it sends along a
 # root service path. So we add it to the context to make queries work.
+
+
+def wait_on_quantumleap():
+    wait_for_quantumleap(quantumleap_client())

@@ -1,16 +1,16 @@
+from fipy.ngsi.entity import EntityUpdateNotification
+from fipy.ngsi.headers import FiwareContext
 import logging
-from typing import Any
+from typing import Any, List
 
 from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
-from roughnator.util.ngsi.entity import EntityUpdateNotification
-from roughnator.util.ngsi.headers import FiwareContext
 
 
 def _logger() -> logging.Logger:
     return logging.getLogger(__name__)
 
 
-def _format_mgs(lines: [Any]) -> str:
+def _format_mgs(lines: List[Any]) -> str:
     ls = [f"{line}\n" for line in lines]
     return ''.join(ls)
 
@@ -34,14 +34,14 @@ def received_ngsi_entity_update(ctx: FiwareContext,
     info(msg)
 
 
-def going_to_process_updates(ctx: FiwareContext, ms: [MachineEntity]):
+def going_to_process_updates(ctx: FiwareContext, ms: List[MachineEntity]):
     header = f"going to process updates for {ctx}:"
     msg = _format_mgs([header] + ms)
     info(msg)
 
 
 def going_to_update_context_with_estimates(ctx: FiwareContext,
-                                           rs: [RoughnessEstimateEntity]):
+                                           rs: List[RoughnessEstimateEntity]):
     header = f"going to update context ({ctx}) with estimates:"
     msg = _format_mgs([header] + rs)
     info(msg)

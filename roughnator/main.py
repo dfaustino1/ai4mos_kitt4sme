@@ -1,11 +1,11 @@
+from fipy.ngsi.entity import EntityUpdateNotification
+from fipy.ngsi.headers import FiwareContext
 from fastapi import FastAPI, Header
 from typing import Optional
 
 from roughnator.enteater import process_update
 import roughnator.log as log
 from roughnator.ngsy import MachineEntity
-from roughnator.util.ngsi.entity import EntityUpdateNotification
-from roughnator.util.ngsi.headers import FiwareContext
 
 
 VERSION = '0.1.0'

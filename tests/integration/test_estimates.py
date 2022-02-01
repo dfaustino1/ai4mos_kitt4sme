@@ -1,20 +1,23 @@
+from fipy.ngsi.entity import FloatAttr
+from fipy.ngsi.orion import OrionClient
+from fipy.wait import wait_until
+from typing import List
+
 from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
-from roughnator.util.ngsi.entity import FloatAttr
-from roughnator.util.ngsi.orion import OrionClient
 from tests.util.fiware import SubMan
 from tests.util.sampler import MachineSampler
-from tests.util.wait import wait_until
 
 
-def upload_machine_entities(orion: OrionClient) -> [MachineEntity]:
-    sampler = MachineSampler(machines_n=2, orion=orion)
-    machine1 = sampler.send_machine_readings(1)
-    machine2 = sampler.send_machine_readings(2)
+def upload_machine_entities(orion: OrionClient) -> List[MachineEntity]:
+    sampler = MachineSampler(pool_size=2, orion=orion)
+    machine1 = sampler.send_device_readings(1)
+    machine2 = sampler.send_device_readings(2)
 
     return [machine1, machine2]
 
 
-def list_estimate_entities(orion: OrionClient) -> [RoughnessEstimateEntity]:
+def list_estimate_entities(orion: OrionClient) \
+        -> List[RoughnessEstimateEntity]:
     like = RoughnessEstimateEntity(id='',
                                    acceleration=FloatAttr.new(1),
                                    roughness=FloatAttr.new(1))

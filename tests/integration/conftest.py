@@ -1,9 +1,9 @@
+from fipy.docker import DockerCompose
+from fipy.ngsi.orion import OrionClient
 import pytest
 
-from roughnator.util.ngsi.orion import OrionClient
-from tests.util.docker import DockerCompose
-from tests.util.fiware import orion_client
-from tests.util.wait import wait_for_orion
+from tests.util.fiware import orion_client, wait_on_orion
+
 
 docker = DockerCompose(__file__)
 
@@ -16,7 +16,7 @@ def build_images():
 @pytest.fixture(scope='package', autouse=True)
 def run_services():
     docker.start()
-    wait_for_orion()
+    wait_on_orion()
     yield
     docker.stop()
 
