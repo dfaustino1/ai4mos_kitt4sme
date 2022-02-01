@@ -1,12 +1,11 @@
-import os
+from fipy.cfg.reader import EnvReader, StrVar
 from uri import URI
 
 
-ORION_BASE_URL_VAR = 'ORION_BASE_URL'
+ORION_BASE_URL_VAR = StrVar(var_name='ORION_BASE_URL', default_value='')
+reader = EnvReader()
 
 
 def orion_base_url() -> URI:
-    value = os.environ[ORION_BASE_URL_VAR]
+    value = reader.read(ORION_BASE_URL_VAR)
     return URI(value)
-
-# TODO. Robust implementation. See e.g. env readers from QL.

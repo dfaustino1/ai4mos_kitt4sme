@@ -1,15 +1,16 @@
 FROM python:3.8
 
-RUN pip install pipenv
+RUN pip install poetry
 RUN mkdir /src
-COPY Pipfile /src/Pipfile
-COPY Pipfile.lock /src/Pipfile.lock
-RUN cd /src && { pipenv lock -r > /requirements.txt; }
-RUN pip install -r /requirements.txt
+WORKDIR /src
+
+COPY poetry.lock pyproject.toml /src/
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-dev --no-interaction --no-ansi
 
 COPY roughnator /src/roughnator
 COPY data /src/data
-WORKDIR /src
+
 ENV PYTHONPATH=$PWD:$PYTHONPATH
 
 EXPOSE 8000
