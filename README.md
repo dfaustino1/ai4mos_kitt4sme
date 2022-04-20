@@ -11,7 +11,7 @@ get a dev shell with the right Python and Poetry versions simply by
 running
 
 ```console
-$ nix shell github:c0c0n3/kitt4sme.fipy?dir=nix
+$ nix shell github:c0c0n3/kitt4sme.roughnator?dir=nix
 ```
 
 Otherwise, install the usual way you do on your platform. Then clone
@@ -85,10 +85,18 @@ and Quantum Leap. For each entity Orion sends on, Roughnator comes
 up with a surface roughness estimate that then writes back to Orion.
 Since Quantum Leap got subscribed to all entity changes, it'll
 collect both machine and estimate entities in their own time series.
-To see what's going on under the bonnet, browse to the CrateDB Web
-UI at: http://localhost:4200.
+And here's what's actually going on under the bonnet:
 
-Now browse to the Roughnator Dazzler dashboard at:
+![Live simulator.][dia.sim]
+
+In fact, if you browse to the CrateDB Web UI at:
+
+- http://localhost:4200.
+
+you should be able to query both the machine and estimate entity
+tables to see data coming in from the simulator through Orion and
+then Quantum Leap. Now browse to the Roughnator Dazzler dashboard
+at:
 
 - http://localhost:8080/dazzler/csic/-/
 
@@ -104,3 +112,8 @@ DB/schema for that tenant. Also the tenant's name is part of the
 Dazzler dashboard URL and is also shown on the dashboard. (KITT4SME
 relies on this arrangement to silo tenant data and enforce security
 policies.)
+
+
+
+
+[dia.sim]: ./roughnator-sim.svg
