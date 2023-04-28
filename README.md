@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 KITT4SME ai4mos
 -------------------
 > Solves the job shop scheduling problem and estimates total energy consumption of the schedule.
@@ -59,6 +58,3 @@ possible to see the flow of messages that passing through the
 context broker, access the grafana Web UI at:
 
 - http://localhost:3000.
-=======
-# ai4mos_kitt4sme
->>>>>>> 3ca078e60f31a1396e7493d3f3db5760388a514f
