@@ -2,8 +2,7 @@ from fipy.ngsi.entity import EntityUpdateNotification
 from fipy.ngsi.headers import FiwareContext
 import logging
 from typing import Any, List
-
-from roughnator.ngsy import MachineEntity, RoughnessEstimateEntity
+from roughnator.ngsy import Productions, Schedule
 
 
 def _logger() -> logging.Logger:
@@ -32,16 +31,16 @@ def received_ngsi_entity_update(ctx: FiwareContext,
     header = f"got entity updates for {ctx}:"
     msg = _format_mgs([header] + notification.data)
     info(msg)
+    
 
-
-def going_to_process_updates(ctx: FiwareContext, ms: List[MachineEntity]):
+def going_to_process_updates(ctx: FiwareContext, ms: List[Productions]):
     header = f"going to process updates for {ctx}:"
     msg = _format_mgs([header] + ms)
     info(msg)
 
 
 def going_to_update_context_with_estimates(ctx: FiwareContext,
-                                           rs: List[RoughnessEstimateEntity]):
+                                           rs: List[Schedule]):
     header = f"going to update context ({ctx}) with estimates:"
     msg = _format_mgs([header] + rs)
     info(msg)

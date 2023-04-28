@@ -6,7 +6,7 @@ from typing import Optional
 from roughnator import __version__
 from roughnator.enteater import process_update
 import roughnator.log as log
-from roughnator.ngsy import MachineEntity
+from roughnator.ngsy import Productions
 
 
 app = FastAPI()
@@ -34,6 +34,7 @@ def post_updates(notification: EntityUpdateNotification,
 
     log.received_ngsi_entity_update(ctx, notification)
 
-    updated_machines = notification.filter_entities(MachineEntity)
-    if updated_machines:
-        process_update(ctx, updated_machines)
+    updated_productions = notification.filter_entities(Productions)
+    
+    if updated_productions:
+        process_update(ctx, updated_productions)

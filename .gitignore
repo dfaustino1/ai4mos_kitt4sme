@@ -131,3 +131,5 @@ dmypy.json
 # IDEs
 .idea/
 .vscode/
+/roughnator/SchedulingKITT_json1/nbproject/private/
+/roughnator/SchedulingKITT_json2/nbproject/private/

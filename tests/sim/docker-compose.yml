@@ -27,6 +27,16 @@ services:
     networks:
      - simtests
 
+  # Grafana was used for better visualization of the results
+  grafana:
+    image: grafana/grafana:6.1.6
+    ports:
+      - 3000:3000
+    depends_on:
+      - crate
+    networks:
+      - simtests
+
   quantumleap:
     image: orchestracities/quantumleap:0.8.3
     depends_on:
@@ -42,15 +52,14 @@ services:
       - LOGLEVEL=DEBUG
 
   roughnator:
-    build: ../../
-    image: kitt4sme/roughnator
+    image: dfaustino/schedulingkitt:latest
     networks:
       - simtests
     ports:
       - "8000:8000"
     environment:
       - ORION_BASE_URL=http://orion:1026
-
+    
   dazzler:
     image: ghcr.io/c0c0n3/kitt4sme.dazzler:0.2.0
     networks:
